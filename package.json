@@ -1,6 +1,6 @@
 {
   "name": "fakeip-compat",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Fake-IP-aware web.fetch provider for TUN (Mihomo/Clash) DNS environments plus pinned LAN CIDR access",
   "license": "MIT",
   "type": "module",

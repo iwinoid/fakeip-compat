@@ -37,6 +37,13 @@
 | `lanInsecure` | `false` | 仅 LAN 路径跳过 TLS 校验，自签设备才开 |
 | `maxResponseBytes` / `maxBodyChars` / `timeoutMs` / `maxRedirects` / `userAgent` | `5000000` / `100000` / `30000` / `5` / 官方 UA | 与官方 provider 同语义 |
 
+## 图形化配置（设置 → 插件 → 插件配置）
+
+本插件注册了 `fakeip-compat` 设置节，上表所有字段都可以在 Web GUI 里可视化
+编辑，保存即时生效、无需重启 DSH。非法输入（如写错的 CIDR）会被忽略并保留
+上次有效值，不会中断正在进行的抓取。无设置服务的环境（如 headless）自动
+回落到组合配置。
+
 ## 与 v1 的区别
 
 - v1 直接改写 `web.fetch` 并经 shell 拼 `curl`/`getent` 命令：绕开 provider
