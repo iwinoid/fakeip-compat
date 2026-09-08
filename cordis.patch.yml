@@ -1,0 +1,26 @@
+# fakeip-compat bundle layer: one host-plane row registering the `fakeip-http`
+# fetch provider into the shared ctx.web seam. Publishes no service (same as
+# the official web-fetch-http row: provider registration is effect-scoped and
+# unwinds with the plugin; nothing else consumes this package directly).
+#
+# Selection is explicit, like every official provider (see dsh-base, which pins
+# `web.fetchProvider: http`). To use this provider, point the web seam at it
+# from your own layer (profile cordis.patch.yml, applied after bundles):
+#
+#   - id: web
+#     name: '@deepseek-ai/dsh-web'
+#     config:
+#       searchProvider: tavily        # keep your existing search choice!
+#       fetchProvider: fakeip-http
+#
+# ...or per-process: DSH_WEB_FETCH_PROVIDER=fakeip-http
+# Do NOT set only fetchProvider on the web row: a patch replaces the whole
+# row config, so always restate searchProvider alongside it.
+- insert:
+    - id: web-fetch-fakeip-compat
+      name: fakeip-compat
+      config:
+        lanCidr: 192.168.31.0/24
+        fakeV4Cidr: 198.18.0.0/16
+        fakeV6Cidr: fdfe:dcba:9876::/48
+        lanInsecure: false
