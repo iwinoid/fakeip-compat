@@ -20,7 +20,7 @@
     - id: web-fetch-fakeip-compat
       name: fakeip-compat
       config:
-        lanCidr: 192.168.31.0/24
+        lanCidr: 192.168.0.0/16
         fakeV4Cidr: 198.18.0.0/16
         fakeV6Cidr: fdfe:dcba:9876::/48
         lanInsecure: false
