@@ -32,10 +32,16 @@ An earlier v1 approach patched `web.fetch` directly and shelled out to `curl`/`g
 Runtime dependencies install with the package (`@deepseek-ai/schemastery`, `ipaddr.js`, `undici`, plus the DSH peers). A TUN proxy is only needed for the Fake-IP path. The LAN path needs no proxy.
 
 ```sh
-dsh plugin --profile web add link:/path/to/fakeip-compat
-# or:
 dsh plugin --profile web add github:iwinoid/fakeip-compat
 ```
+
+Local development uses a link install instead:
+
+```sh
+dsh plugin --profile web add link:/path/to/fakeip-compat
+```
+
+The package has no build step, so a git install needs no `allowBuilds` exception.
 
 This package only registers the provider. It never selects itself. The official multi-provider rule applies: without an explicit choice the seam reports `WEB_PROVIDER_AMBIGUOUS`. Point the web seam at it from the profile layer:
 
