@@ -16,11 +16,16 @@
 # ...or per-process: DSH_WEB_FETCH_PROVIDER=fakeip-http
 # Do NOT set only fetchProvider on the web row: a patch replaces the whole
 # row config, so always restate searchProvider alongside it.
+# Fake-IP pools accept comma/whitespace separated CIDR lists: one stack may
+# answer several pools (e.g. Mihomo returning 198.18.0.0/16 for A and
+# 2001:2::/48 for AAAA). Keep them in sync with the local Clash Verge
+# fake-ip-range / fake-ip-range6. (fdfe:dcba:9876::/48 is the Clash TUN
+# device range some setups also answer from, hence listed second.)
 - insert:
     - id: web-fetch-fakeip-compat
       name: fakeip-compat
       config:
-        lanCidr: 192.168.0.0/16
+        lanCidr: 192.168.0.0/16, 10.0.0.0/8, 100.64.0.0/10
         fakeV4Cidr: 198.18.0.0/16
-        fakeV6Cidr: fdfe:dcba:9876::/48
+        fakeV6Cidr: 2001:2::/48, fdfe:dcba:9876::/48
         lanInsecure: false
