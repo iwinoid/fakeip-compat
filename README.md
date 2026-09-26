@@ -71,8 +71,8 @@ dsh --profile <name> --dump-config | grep -A8 fakeip
 
 | Key | Default | Notes |
 | --- | --- | --- |
-| `lanCidr` | `192.168.0.0/16` | LAN allowlist. System-resolved results inside it transport pinned. |
-| `fakeV4Cidr` / `fakeV6Cidr` | `198.18.0.0/16` / `fdfe:dcba:9876::/48` | Local Fake-IP pools. Match them to the Clash Verge config. |
+| `lanCidr` | `192.168.0.0/16, 10.0.0.0/8, 100.64.0.0/10` | LAN allowlist (comma/whitespace separated). System-resolved results inside it transport pinned. Covers home `192.168.x`, phone-hotspot `10.x`, and Tailscale CGNAT. |
+| `fakeV4Cidr` / `fakeV6Cidr` | `198.18.0.0/16` / `2001:2::/48, fdfe:dcba:9876::/48` | Local Fake-IP pools. Each accepts a comma/whitespace separated CIDR list — one stack may answer several pools (Mihomo commonly returns `198.18.0.0/16` for A and `2001:2::/48` for AAAA). Match them to the Clash Verge `fake-ip-range` / `fake-ip-range6`. |
 | `dohEndpoints` | `1.1.1.1/dns-query`, `8.8.8.8/resolve` | Trusted DoH (JSON API) over direct IP-literal endpoints. First fully successful endpoint wins. |
 | `dohTimeoutMs` | `8000` | Budget for one DoH lookup. |
 | `lanInsecure` | `false` | Skip TLS check on the LAN path only. Turn it on for self-signed devices. |
@@ -80,7 +80,7 @@ dsh --profile <name> --dump-config | grep -A8 fakeip
 
 ### Settings UI
 
-The plugin registers a `fakeip-compat` settings section and a browser card of the same name (`lib/client.js`, hand-written, no build step). After a DSH restart the card shows under Settings → Plugins → Plugin configuration. Every field in the table above edits there. Saves apply at once with no restart. Invalid input (such as a bad CIDR) blocks the save. A bad runtime edit keeps the last valid value and never breaks an in-flight fetch. Environments without a settings service (such as headless) fall back to the merged config.
+The plugin declares every field volatile, so edits apply live with no restart and no remount: the row's page on the Plugins page edits the active profile entry, and `loader/volatile-update` swaps the runtime. An invalid edit keeps the last valid runtime and never breaks an in-flight fetch. The card (`lib/client.js`, hand-written, no build step) registers into `plugins.row.config` for `fakeip-compat#web-fetch-fakeip-compat` while the Host serves the entry.
 
 ## API
 
