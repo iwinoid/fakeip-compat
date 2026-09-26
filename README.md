@@ -71,7 +71,7 @@ dsh --profile <name> --dump-config | grep -A8 fakeip
 
 | Key | Default | Notes |
 | --- | --- | --- |
-| `lanCidr` | `192.168.0.0/16, 10.0.0.0/8, 100.64.0.0/10` | LAN allowlist (comma/whitespace separated). System-resolved results inside it transport pinned. Covers home `192.168.x`, phone-hotspot `10.x`, and Tailscale CGNAT. |
+| `lanCidr` | `192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, 100.64.0.0/10` | LAN allowlist (comma/whitespace separated): all RFC1918 ranges plus Tailscale CGNAT. System-resolved results inside it transport pinned. Tradeoff: broader than strictly-LAN (notably `100.64/10`, which ISPs also use) — a hostile DNS answer inside these ranges would be fetched rather than refused. `lanInsecure: false` keeps TLS verification on the LAN path. |
 | `fakeV4Cidr` / `fakeV6Cidr` | `198.18.0.0/16` / `2001:2::/48, fdfe:dcba:9876::/48` | Local Fake-IP pools. Each accepts a comma/whitespace separated CIDR list — one stack may answer several pools (Mihomo commonly returns `198.18.0.0/16` for A and `2001:2::/48` for AAAA). Match them to the Clash Verge `fake-ip-range` / `fake-ip-range6`. |
 | `dohEndpoints` | `1.1.1.1/dns-query`, `8.8.8.8/resolve` | Trusted DoH (JSON API) over direct IP-literal endpoints. First fully successful endpoint wins. |
 | `dohTimeoutMs` | `8000` | Budget for one DoH lookup. |
