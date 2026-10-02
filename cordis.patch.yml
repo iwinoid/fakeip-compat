@@ -16,8 +16,17 @@
 # ...or per-process: DSH_WEB_FETCH_PROVIDER=fakeip-http
 # Do NOT set only fetchProvider on the web row: a patch replaces the whole
 # row config, so always restate searchProvider alongside it.
+#
+# The row id IS this plugin's settings namespace on dsh 0.2.x (a row's Config is
+# published to the settings document under its loader row id — see
+# `BASH_NS = "bash-sandbox"`, `PWSH_NS = "pwsh-sandbox"`,
+# `WEB_SEARCH_NS = "web-search-deepseek"` in the shipped client cards). It is
+# kept equal to the package name and to the plugin's `name` export so every
+# derivation of that id agrees, and so the browser half's card can bind the
+# namespace `fakeip-compat` without guessing. Renaming this row id is a
+# config-visible change: patches that target the old id stop matching.
 - insert:
-    - id: web-fetch-fakeip-compat
+    - id: fakeip-compat
       name: fakeip-compat
       config:
         lanCidr: 192.168.0.0/16
