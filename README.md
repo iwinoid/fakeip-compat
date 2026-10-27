@@ -4,6 +4,9 @@
 [![topic: dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-4D6BFE?style=for-the-badge)](https://github.com/topics/dsh-plugin)
 [![powered by dsh](https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=for-the-badge&logo=deepseek&logoColor=white)](https://github.com/deepseek-ai/deepseek-harness)
 
+> [!WARNING]
+> Personal-use project. It is built and tested for my own machine and workflow only; I do not guarantee it works on other DSH versions, platforms or setups. Review the code first and use it at your own risk.
+
 Fake-IP-aware web.fetch provider for TUN (Mihomo/Clash) DNS environments plus pinned LAN CIDR access
 
 ## Table of Contents
