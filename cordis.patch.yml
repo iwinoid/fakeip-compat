@@ -24,8 +24,3 @@
 - insert:
     - id: web-fetch-fakeip-compat
       name: fakeip-compat
-      config:
-        lanCidr: 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, 100.64.0.0/10
-        fakeV4Cidr: 198.18.0.0/16
-        fakeV6Cidr: 2001:2::/48, fdfe:dcba:9876::/48
-        lanInsecure: false

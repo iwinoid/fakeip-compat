@@ -49,7 +49,7 @@ This package only registers the provider. It never selects itself. The official 
 - id: web
   name: '@deepseek-ai/dsh-web'
   config:
-    searchProvider: tavily      # keep your existing search choice, never drop it
+    searchProvider: deepseek-official   # keep your existing search choice, never drop it
     fetchProvider: fakeip-http
 ```
 
@@ -73,8 +73,8 @@ dsh --profile <name> --dump-config | grep -A8 fakeip
 | --- | --- | --- |
 | `lanCidr` | `192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, 100.64.0.0/10` | LAN allowlist (comma/whitespace separated): all RFC1918 ranges plus Tailscale CGNAT. System-resolved results inside it transport pinned. Tradeoff: broader than strictly-LAN (notably `100.64/10`, which ISPs also use) — a hostile DNS answer inside these ranges would be fetched rather than refused. `lanInsecure: false` keeps TLS verification on the LAN path. |
 | `fakeV4Cidr` / `fakeV6Cidr` | `198.18.0.0/16` / `2001:2::/48, fdfe:dcba:9876::/48` | Local Fake-IP pools. Each accepts a comma/whitespace separated CIDR list — one stack may answer several pools (Mihomo commonly returns `198.18.0.0/16` for A and `2001:2::/48` for AAAA). Match them to the Clash Verge `fake-ip-range` / `fake-ip-range6`. |
-| `dohEndpoints` | `1.1.1.1/dns-query`, `8.8.8.8/resolve` | Trusted DoH (JSON API) over direct IP-literal endpoints. First fully successful endpoint wins. |
-| `dohTimeoutMs` | `8000` | Budget for one DoH lookup. |
+| `dohEndpoints` | `https://1.1.1.1/dns-query`, `https://8.8.8.8/resolve` | Trusted DoH (JSON API). Every entry must be an `https://` URL whose host is an IP literal (hostnames are rejected at boot and by the settings UI); first fully successful endpoint wins. |
+| `dohTimeoutMs` | `8000` | Budget for one DoH lookup. Must be a positive integer no greater than `2147483647` (Node's timer limit); larger values are rejected at boot. |
 | `lanInsecure` | `false` | Skip TLS check on the LAN path only. Turn it on for self-signed devices. |
 | `maxResponseBytes` / `maxBodyChars` / `timeoutMs` / `maxRedirects` / `userAgent` | `5000000` / `100000` / `30000` / `5` / official UA | Same meaning as the official provider. |
 
