@@ -10,7 +10,7 @@
 #   - id: web
 #     name: '@deepseek-ai/dsh-web'
 #     config:
-#       searchProvider: tavily        # keep your existing search choice!
+#       searchProvider: deepseek-official  # keep your existing search choice!
 #       fetchProvider: fakeip-http
 #
 # ...or per-process: DSH_WEB_FETCH_PROVIDER=fakeip-http

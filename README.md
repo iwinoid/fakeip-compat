@@ -80,7 +80,7 @@ dsh --profile <name> --dump-config | grep -A8 fakeip
 
 ### Settings UI
 
-The plugin declares every field volatile, so edits apply live with no restart and no remount: the row's page on the Plugins page edits the active profile entry, and `loader/volatile-update` swaps the runtime. An invalid edit keeps the last valid runtime and never breaks an in-flight fetch. The card (`lib/client.js`, hand-written, no build step) registers into `plugins.row.config` for `fakeip-compat#web-fetch-fakeip-compat` while the Host serves the entry.
+The plugin declares every field volatile, so edits apply live with no restart and no remount: the row's page on the Plugins page edits the active profile entry, and `loader/volatile-update` swaps the runtime. A live edit is merged field by field: invalid fields keep their previous values while valid fields in the same save take effect, so one bad entry cannot discard the whole edit; boot-time validation stays strict and a broken composition entry still fails loud. Each fetch reads one consistent runtime snapshot. The card (`lib/client.js`, hand-written, no build step) registers into `plugins.row.config` for `fakeip-compat#web-fetch-fakeip-compat` while the Host serves the entry.
 
 ## API
 
